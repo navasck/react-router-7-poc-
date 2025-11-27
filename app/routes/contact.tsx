@@ -37,6 +37,7 @@ export default function Contact() {
       <Form
         method="post"
         className="bg-white shadow-lg rounded-xl p-6 border border-gray-200 space-y-5"
+        replace
       >
         <InputField
           label="Name"
