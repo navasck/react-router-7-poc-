@@ -3,7 +3,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open('rr7-pwa-cache').then((cache) => {
-      return cache.addAll(['/', '/manifest.webmanifest']);
+      return cache.addAll(['/manifest.webmanifest']);
     })
   );
 });
@@ -13,22 +13,25 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  const { request } = event;
+  // NEVER touch POST or form submissions
+  if (event.request.method !== 'GET') return;
 
-  // Only GET requests
-  if (request.method !== 'GET') return;
+  // NEVER intercept SSR navigations
+  if (event.request.mode === 'navigate') return;
 
+  // Allow static asset caching only
   event.respondWith(
-    caches.match(request).then((cached) => {
+    caches.match(event.request).then((cached) => {
       return (
         cached ||
-        fetch(request).catch(() => {
-          // fallback for navigation
-          if (request.mode === 'navigate') {
-            return caches.match('/');
-          }
+        fetch(event.request).then((response) => {
+          return caches.open('rr7-pwa-cache').then((cache) => {
+            cache.put(event.request, response.clone());
+            return response;
+          });
         })
       );
     })
   );
 });
+
