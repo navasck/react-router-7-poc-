@@ -5,7 +5,7 @@ export function meta({}: Route.MetaArgs) {
   return [
     { title: "New React Router App" },
     { name: "description", content: "Welcome to React Router!" },
-  ];
+  ]
 }
 
 
@@ -18,7 +18,7 @@ export default function Home() {
           to="/contact"
           className="block bg-white rounded-2xl shadow-md p-6 border hover:shadow-xl transition-all hover:-translate-y-1"
         >
-          <h3 className="text-xl font-semibold mb-2">Contact Form</h3>
+          <h3 className="text-xl font-semibold mb-2 text-black">Contact Form</h3>
           <p className="text-gray-600">Submit a message (server-side submit)</p>
         </Link>
 
@@ -26,12 +26,12 @@ export default function Home() {
           to="/posts"
           className="block bg-white rounded-2xl shadow-md p-6 border hover:shadow-xl transition-all hover:-translate-y-1"
         >
-          <h3 className="text-xl font-semibold mb-2">Post Listing</h3>
+          <h3 className="text-xl font-semibold mb-2 text-black">Post Listing</h3>
           <p className="text-gray-600">View all posts</p>
         </Link>
       </div>
     </div>
-  );
+  )
 }
 
 

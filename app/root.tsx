@@ -39,17 +39,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  );
+  )
 }
 
 export default function App() {
   return (
     <> <div className="container mx-auto flex items-center justify-center h-20">
-      <NavLink to="/" className="text-2xl font-bold text-black">
+      <NavLink to="/" className="text-2xl font-bold text-black dark:text-white">
         React Router 7 POC
       </NavLink>
     </div>
-      <Outlet />;</>)
+      <Outlet /></>)
 
 }
 

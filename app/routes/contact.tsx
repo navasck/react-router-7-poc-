@@ -21,7 +21,7 @@ export default function Contact() {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">
+      <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white text-center">
         Contact Us
       </h2>
 
@@ -40,7 +40,7 @@ export default function Contact() {
           </label>
           <select
             name="inquiryType"
-            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 border-gray-300"
           >
             <option value="">Select...</option>
             <option value="general">General</option>
@@ -55,7 +55,7 @@ export default function Contact() {
           <label className="block font-medium text-gray-700 mb-1">Message</label>
           <textarea
             name="message"
-            className="w-full px-3 py-2 h-28 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 h-28 border rounded-lg focus:ring-2 focus:ring-blue-500 border-gray-300"
           />
           {errors.message && (
             <p className="text-red-600 text-sm mt-1">{errors.message}</p>
@@ -91,7 +91,7 @@ function InputField({ label, name, type = "text", error }: any) {
       <input
         name={name}
         type={type}
-        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 border-gray-300"
       />
       {error && <p className="text-red-600 text-sm mt-1">{error[0]}</p>}
     </div>
