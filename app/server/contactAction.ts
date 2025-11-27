@@ -1,13 +1,9 @@
 import { z } from "zod";
 
-
 export const ContactSchema = z.object({
   name: z.string().min(2, "Name is required"),
   email: z.string().email("Email is not valid"),
-  phone: z
-    .string()
-    .regex(/^[0-9]{10}$/, "Phone must be 10 digits")
-    .optional(),
+  phone: z.string().regex(/^[0-9]{10}$/, "Phone must be 10 digits").optional(),
   subject: z.string().min(3, "Subject is required"),
   inquiryType: z.enum(["general", "support", "sales"], {
     errorMap: () => ({ message: "Please select an inquiry type" }),
@@ -18,38 +14,23 @@ export const ContactSchema = z.object({
   }),
 });
 
+export async function contactAction({ request }) {
+  const formData = await request.formData();
+  const values = Object.fromEntries(formData);
 
-export async function contactAction({ request }: { request: Request }) {
-  const data = Object.fromEntries(await request.formData());
-
-  const result = ContactSchema.safeParse(data);
+  const result = ContactSchema.safeParse(values);
 
   if (!result.success) {
-    return new Response(
-      JSON.stringify({
-        success: false,
-        errors: result.error.flatten().fieldErrors,
-      }),
-      {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    return {
+      success: false,
+      errors: result.error.flatten().fieldErrors,
+      fields: values,
+    };
   }
 
-  console.log("Received Contact:", result.data);
-
-  return new Response(
-    JSON.stringify({
-      success: true,
-      data: result.data,
-      message: "Form submitted successfully!",
-    }),
-    {
-      headers: { "Content-Type": "application/json" },
-    }
-  );
+  return {
+    success: true,
+    message: "Form submitted successfully!",
+    data: result.data,
+  };
 }
-
-
-
