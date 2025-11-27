@@ -1,4 +1,4 @@
-import { useActionData, Form } from "react-router";
+import { useActionData, Form, useNavigation } from "react-router";
 import { useEffect, useState } from "react";
 import { contactAction } from "~/server/contactAction";
 import Toast from "~/components/Toast";
@@ -9,6 +9,10 @@ export default function Contact() {
   const result: any = useActionData();
   const errors = result?.errors ?? {};
   const fields = result?.fields ?? {};
+
+  // Determine if the form is currently submitting
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === 'submitting';
 
   const [toast, setToast] = useState(null);
 
@@ -124,9 +128,13 @@ export default function Contact() {
 
         <button
           type="submit"
-          className="w-full py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-indigo-600 shadow-lg hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl transition-colors duration-300 cursor-pointer"
+          className={`w-full py-3 rounded-lg font-semibold text-white transition-colors duration-300 ${isSubmitting
+            ? 'bg-gray-400 cursor-not-allowed'
+            : 'bg-gradient-to-r from-blue-500 to-indigo-600 shadow-lg hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl cursor-pointer'
+            }`}
+          disabled={isSubmitting}
         >
-          Submit
+          {isSubmitting ? 'Sending...' : 'Submit'}
         </button>
       </Form>
     </div>
